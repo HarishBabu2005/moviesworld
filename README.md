@@ -6,3 +6,7 @@
 4. `git add .`
 5. `git commit -m "your msg"`
 6. `git push -u origin main` or `git push`
+ 
+ ###database
+1.mongodb atlas
+
