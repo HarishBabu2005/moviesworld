@@ -1,7 +1,12 @@
 import Movie from "../models/movie.models.js";
 
-export const movieview=(req,res)=>{
-    res.send("hi")
+export const movieview=async(req,res)=>{
+    try {
+        const movieread=await Movie.find()
+        res.json(movieread)
+    } catch (error) {
+        res.status(500).json({message : error.message})
+    } 
 }
 export const moviecreate=async(req,res)=>{
   
@@ -18,8 +23,34 @@ export const moviecreate=async(req,res)=>{
   
     
 }
-export const movieupdate=(req,res)=>{
-    res.send("i am modifier")
+export const movieDetail=async(req,res)=>{
+    try{
+    const getmovie=await Movie.findById(req.params.id)
+    
+    if(getmovie==null){
+        res.status(404).json({message:"cannot find this movie"})
+    }
+    else{
+        res.json(getmovie);
+    }
+}
+    catch(error){
+        res.status(500).json({message :error.message})
+    }
+}
+export const movieupdate=async(req,res)=>{
+    try{
+    const moviechange=await Movie.findOneAndUpdate({_id:req.params.id},{
+        title: req.body.title,
+        desc: req.body.desc
+    },{
+        new:true
+    })
+    res.status(200).json(moviechange)
+}
+    catch(error){
+        res.status(404).json({message:error.message})
+    }
 }
 export const moviedelete=(req,res)=>{
     res.send("i am remover")
